@@ -76,11 +76,11 @@ while True:
                         expense_file = f"{userName}_expense.txt"
                         try:
                             with open(expense_file, "r") as f:
-                                print("\n" + "=" * 70)
-                                print(
-                                    f"{'ID':<5}{'Date':<15}{'Category':<15}{'Amount':<10}{'Description'}"
-                                )
-                                print("=" * 70)
+                                print("=====Yourt Expense=====")
+
+                                print("\n" + "=" * 60)
+                                print("Date\t\tCategory\tAmount\tDescription")
+                                print("=" * 60)
 
                                 for line in f:
                                     line = line.strip()
@@ -88,87 +88,21 @@ while True:
                                     if not line:
                                         continue
 
-                                    expense_id, Date, Category, Amount, Description = (
-                                        line.split(",")
+                                    expense_id, Date, Category, Amount, Description = line.split(
+                                        ","
                                     )
 
                                     print(
-                                        f"{expense_id:<5}{Date:<15}{Category:<15}{Amount:<15}{Description}"
+                                        f"{expense_id}\t{Date}\t{Category}\t\t{Amount}\t{Description}"
                                     )
-
-                                print("=" * 70)
+                                   
 
                         except FileNotFoundError:
                             print("No expenses found!")
 
                     elif expense_choice == "3":
-                        update_id = input("Enter ID to update expense: ")
-                        expense_file = f"{userName}_expense.txt"
-                        update_lines = []
-                        found = False
-
-                        with open(expense_file, "r") as f:
-                            for line in f:
-                                line = line.strip()
-
-                                if not line:
-                                    continue
-                                expense_id, Date, Category, Amount, Description = (
-                                    line.split(",")
-                                )
-
-                                if expense_id == update_id:
-                                    print("\nEnter new details")
-
-                                    Date = input("Enter expense date(DD/MM/YYYY):")
-                                    Category = input("Enter expense category:")
-                                    Amount = input("Enter expense amount: ")
-                                    Description = input("Enter expense description:")
-
-                                    found = True
-                                update_lines.append(
-                                    f"{expense_id},{Date},{Category},{Amount},{Description}\n"
-                                )
-                            with open(expense_file, "w") as f:
-                                f.writelines(update_lines)
-                            if found:
-                                print("Expense update successfully")
-                            else:
-                                print("Expense id is invalid!")
-                            print("=" * 60)
-
+                        print("Update Expenses selected")
                     elif expense_choice == "4":
-
-                        expense_file = f"{userName}_expense.txt"
-
-                        dlt_id = input("Enter ID to delete expense: ")
-                        update_lines = []
-
-                        found = False
-
-                        with open(expense_file, "r") as f:
-                            for line in f:
-                                line = line.strip()
-
-                                if not line:
-                                    continue
-                                expense_id, Date, Category, Amount, Description = (
-                                    line.split(",")
-                                )
-
-                                if expense_id == dlt_id:
-                                    found = True
-                                    continue
-                                update_lines.append(
-                                    f"{expense_id},{Date},{Category},{Amount},{Description}\n"
-                                )
-                        with open(expense_file, "w") as f:
-                            f.writelines(update_lines)
-
-                        if found:
-                            print("Expemse deleted successfully")
-                        else:
-                            print("ID not found!")
                         print("Delete Expense selected")
                     elif expense_choice == "5":
                         total = 0
