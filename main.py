@@ -180,6 +180,105 @@ def total_expense(userName):
     print("=" * 60)
 
 
+def search_expense(userName):
+    expense_file = f"{userName}_expense.txt"
+    search_category = input("Enter The expense category: ")
+    found = False
+
+    try:
+        with open(expense_file, "r") as f:
+            print("\n" + "=" * 70)
+            print(f"{'ID':<5}{'Date':<15}{'Category':<15}{'Amount':<10}{'Description'}")
+            print("=" * 70)
+
+            for line in f:
+                line = line.strip()
+
+                if not line:
+                    continue
+                expense_id, Date, Category, Amount, Description = line.split(",")
+
+                if Category.lower() == search_category.lower():
+                    found = True
+
+                    print(
+                        f"{expense_id:<5}{Date:<15}{Category:<15}{Amount:<10}{Description}"
+                    )
+                    print("=" * 70)
+
+            if not found:
+                print("No expense found!")
+    except FileNotFoundError:
+        print("No expense found!")
+
+
+def category_summary(userName):
+    expense_file = f"{userName}_expense.txt"
+    category_total = {}
+    try:
+        with open(expense_file, "r") as f:
+            for line in f:
+                line = line.strip()
+
+                if not line:
+                    continue
+                expense_id, Date, Category, Amount, Description = line.split(",")
+                Amount = int(Amount)
+
+                if Category in category_total:
+                    category_total[Category] += Amount
+                else:
+                    category_total[Category] = Amount
+        print("\n" + "=" * 40)
+        print(f"{'Category':<20}{'Total'}")
+        print("=" * 40)
+
+        for category, total in category_total.items():
+            print(f"{category:<20}{total}")
+        print("=" * 40)
+    except FileNotFoundError:
+        print("No expenses Found!")
+
+def monthly_report(userName):
+    expense_file=f"{userName}_expense.txt"
+    month= input("Enter month(MM/YYYY):")
+
+    total=0
+    found= False
+
+
+    try:
+        with open(expense_file,"r") as f:
+            print("\n" + "=" * 70)
+            print(
+                f"{'ID':<5}{'Date':<15}{'Category':<15}{'Amount':<10}{'Description'}"
+            )
+            print("=" * 70)
+            for line in f:
+                line = line.strip()
+                
+                if not line:
+                    continue
+                expense_id,Date,Category,Amount,Description=line.split(",")
+                expense_month=Date[3:]
+
+                if expense_month==month:
+                    found=True
+                    total+=int(Amount)
+                    print(
+                        f"{expense_id:<5}{Date:<15}{Category:<15}{Amount:<10}{Description}"
+                    )
+                
+                print("="*70)
+
+                if found:
+                    print(f"toatal expense of {month}:{total}")
+                else:
+                    print("No expense found for this month!")
+    except FileNotFoundError:
+        print("No expense found !")
+
+
 def expense_menu(userName):
     while True:
         print("1.Add Expense")
@@ -187,7 +286,12 @@ def expense_menu(userName):
         print("3.Update Expense")
         print("4.Delete Expense")
         print("5.Total Expense")
-        print("6.Logout")
+        print("6.Search Expense")
+        print("7.Category Summary")
+        print("8.Monthly Report")
+        print("9.Set Budget")
+        print("10.Change Budget")
+        print("11.Logout")
 
         expense_choice = input("Enter the choice: ")
 
@@ -202,6 +306,12 @@ def expense_menu(userName):
         elif expense_choice == "5":
             total_expense(userName)
         elif expense_choice == "6":
+            search_expense(userName)
+        elif expense_choice == "7":
+            category_summary(userName)
+        elif expense_choice=="8":
+            monthly_report(userName)
+        elif expense_choice == "11":
             print("Logout!")
             break
         else:
