@@ -17,7 +17,7 @@ def login():
 
     login_success = False
 
-    with open(r"C:\Users\amars\OneDrive\Desktop\Expense Tracker\user.txt", "r") as f:
+    with open(user.txt, "r") as f:
         for line in f:
             line = line.strip()
 
