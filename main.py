@@ -289,9 +289,7 @@ def expense_menu(userName):
         print("6.Search Expense")
         print("7.Category Summary")
         print("8.Monthly Report")
-        print("9.Set Budget")
-        print("10.Change Budget")
-        print("11.Logout")
+        print("9.Logout")
 
         expense_choice = input("Enter the choice: ")
 
@@ -311,7 +309,7 @@ def expense_menu(userName):
             category_summary(userName)
         elif expense_choice=="8":
             monthly_report(userName)
-        elif expense_choice == "11":
+        elif expense_choice == "9":
             print("Logout!")
             break
         else:
